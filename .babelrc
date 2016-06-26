@@ -1,0 +1,26 @@
+{
+  "presets": [
+    "es2015",
+    "react",
+    "stage-1"
+  ],
+  "env": {
+    "start": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  },
+  "plugins": [
+    "syntax-class-properties",
+    "syntax-decorators",
+    "syntax-object-rest-spread",
+    [
+      "transform-regenerator",
+      {
+        "async": false,
+        "asyncGenerators": false
+      }
+    ]
+  ]
+}
