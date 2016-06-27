@@ -13,7 +13,7 @@ class TaskLists extends Component {
             return (
                 <li onClick={() => this.props.selectList(list, index)}
                     className="list-group-item"
-                    key={list.listName}>
+                    key={index}>
                     {list.listName}
                 </li>
             );

@@ -1,13 +1,9 @@
-// ADD list
-// Toggle list
-// Edit list Name
-// delete list
-
-import { ADD_LIST, LIST_NAME, SELECT_LIST } from '../actions/index';
+import { ADD_LIST, LIST_NAME, SELECT_LIST, ADD_TASK } from '../actions/index';
 
 const initialState = {
   listName: '',
-  activeLists: []
+  activeLists: [],
+  currentList: 0
 }
 
 let currentIndex = 0;
@@ -30,8 +26,8 @@ export default function (state = initialState, action) {
             });
         case SELECT_LIST:
             return Object.assign({}, state, {
+                currentList: action.index,
                 activeLists: state.activeLists.map((list, index) => {
-                    console.log(action.index)
                     if(index === action.index) {
                         return Object.assign({}, list, {
                             selected: true
@@ -42,7 +38,14 @@ export default function (state = initialState, action) {
                         })
                     }
                 })
-            })
+            });
+        case ADD_TASK:
+            //need to return the task in the activeLists with a default of not completed
+            //
+        // case DELETE_TASK:
+            // remove task based on id
+
+
     }
     return state;
 }
