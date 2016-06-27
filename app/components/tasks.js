@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addTask, deleteTask, completedTask } from '../actions/index';
+import _ from 'lodash';
 
-export default class Tasks extends Component {
+class Tasks extends Component {
     render() {
         return (
             <div>
@@ -50,3 +54,15 @@ export default class Tasks extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+  return {
+    lists: state.lists
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ addTask, deleteTask, completedTask }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);
