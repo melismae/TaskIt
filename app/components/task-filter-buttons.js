@@ -8,6 +8,7 @@ class TaskFilterButtons extends Component {
     constructor(props) {
         super(props);
         this.taskFilter = this.taskFilter.bind(this);
+        this.deleteList = this.deleteList.bind(this);
     }
 
     taskFilter(value) {
@@ -23,6 +24,10 @@ class TaskFilterButtons extends Component {
         }
     }
 
+    deleteList() {
+        this.props.deleteList(this.props.lists.currentList);
+    }
+
     render() {
         return (
             <div className="row">
@@ -36,7 +41,7 @@ class TaskFilterButtons extends Component {
                     <button className="btn btn-info" onClick={() => this.taskFilter('all')}>Show All</button>
                 </div>
                 <div className="col-xs-3">
-                    <button className="btn btn-danger">Delete this List</button>
+                    <button className="btn btn-danger" onClick={this.deleteList}>Delete this List</button>
                 </div>
             </div>
         )

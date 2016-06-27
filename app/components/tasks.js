@@ -8,7 +8,7 @@ import _ from 'lodash';
 // TODO: used twice - could probably move to helper function in a /lib dir
 let debounced = _.debounce(function(val) {
     this.props.taskName(val);
-}, 200);
+}, 100);
 
 class Tasks extends Component {
     constructor(props) {
@@ -30,9 +30,9 @@ class Tasks extends Component {
         this.props.addTask(task, list);
     }
 
-    removeTask(index) {
-        console.log(index);
-        this.props.deleteTask(index, this.props.currentList);
+    removeTask(taskIndex) {
+        let listIndex = this.props.lists.currentList;
+        this.props.deleteTask(taskIndex, listIndex);
     }
 
     renderTasks() {

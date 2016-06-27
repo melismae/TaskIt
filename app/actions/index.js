@@ -2,6 +2,7 @@
 export const ADD_LIST = 'ADD_LIST';
 export const LIST_NAME = 'LIST_NAME';
 export const SELECT_LIST = 'SELECT_LIST';
+export const DELETE_LIST = 'DELETE_LIST';
 
 // task specific data
 export const TASK_NAME = 'TASK_NAME';
@@ -35,6 +36,13 @@ export function selectList(name, index) {
     };
 }
 
+export function deleteList(listIndex) {
+    return {
+        type: DELETE_LIST,
+        listIndex: listIndex
+    };
+}
+
 export function taskName(task) {
     return {
         type: TASK_NAME,
@@ -50,10 +58,11 @@ export function addTask(task, list) {
     };
 }
 
-export function deleteTask(index) {
+export function deleteTask(taskIndex, listIndex) {
     return {
         type: DELETE_TASK,
-        index: index
+        taskIndex: taskIndex,
+        listIndex: listIndex
     };
 }
 

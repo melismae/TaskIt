@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 let debounced = _.debounce(function(val) {
     this.props.listName(val);
-}, 500);
+}, 300);
 
 class AddTaskList extends Component {
     constructor (props) {
