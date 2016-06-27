@@ -17,7 +17,7 @@ class AddTaskList extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.addList(this.props.lists.listName);
+        this.props.addList(this.props.lists.list);
     }
 
     onInputChange(event) {

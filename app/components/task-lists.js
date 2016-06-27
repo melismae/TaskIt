@@ -12,9 +12,9 @@ class TaskLists extends Component {
         return this.props.lists.activeLists.map((list, index) => {
             return (
                 <li onClick={() => this.props.selectList(list, index)}
-                    className="list-group-item"
+                    className="list-group-item list-name"
                     key={index}>
-                    {list.listName}
+                    {list.list}
                 </li>
             );
         });

@@ -1,26 +1,26 @@
-import { ADD_LIST, LIST_NAME, SELECT_LIST, ADD_TASK } from '../actions/index';
+import { ADD_LIST, LIST_NAME, SELECT_LIST, ADD_TASK, TASK_NAME, DELETE_TASK } from '../actions/index';
 
 const initialState = {
-  listName: '',
+  list: '',
+  task:'',
   activeLists: [],
-  currentList: 0
+  currentList: 0,
 }
-
-let currentIndex = 0;
 
 export default function (state = initialState, action) {
     switch(action.type) {
         case LIST_NAME:
             return Object.assign({}, state, {
-                listName: action.listName
+                list: action.list
             });
         case ADD_LIST:
             return Object.assign({}, state, {
                 activeLists: [
                     ...state.activeLists,
                     {
-                        listName: action.listName,
-                        selected: true
+                        list: action.list,
+                        selected: true,
+                        tasks: []
                     }
                 ]
             });
@@ -39,12 +39,40 @@ export default function (state = initialState, action) {
                     }
                 })
             });
+        case TASK_NAME:
+            return Object.assign({}, state, {
+                task: action.task
+            });
         case ADD_TASK:
-            //need to return the task in the activeLists with a default of not completed
-            //
-        // case DELETE_TASK:
-            // remove task based on id
+            let copy = state.activeLists;
+            // find the matching item that corresponds to the list being edited
+            copy.forEach((o) => {
+                if(o.list === action.list) {
+                    o.tasks.push({
+                        task: action.task,
+                        completed: false
+                    })
+                }
+            });
 
+            return Object.assign({}, state, {
+                activeLists: copy
+            });
+
+        case DELETE_TASK:
+            return Object.assign({}, state, {
+                task: action.task
+            });
+            let copy = state.activeLists;
+            ...state.slice(0, action.index),
+            console.log(copy == state); // false
+            console.log(copy.c == state.c); // true
+            copy.c = Object.assign({}, state.c);
+            console.log(newState.c == state.c); // now it is false
+            delete newState.c.y;
+            return Object.assign({}, state, {
+                activeLists: copy
+            });
 
     }
     return state;
