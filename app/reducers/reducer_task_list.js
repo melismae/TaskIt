@@ -1,4 +1,14 @@
-import { ADD_LIST, LIST_NAME, SELECT_LIST, DELETE_LIST, ADD_TASK, TASK_NAME, DELETE_TASK } from '../actions/index';
+import {
+    ADD_LIST,
+    LIST_NAME,
+    SELECT_LIST,
+    DELETE_LIST,
+    ADD_TASK,
+    SAVE_EDITED_TASK,
+    EDIT_TASK,
+    TASK_NAME,
+    COMPLETE_TASK,
+    DELETE_TASK } from '../actions/index';
 
 const initialState = {
   list: '',
@@ -6,6 +16,8 @@ const initialState = {
   activeLists: [],
   currentList: 0,
 }
+
+const taskId = 0;
 
 export default function (state = initialState, action) {
     switch(action.type) {
@@ -45,12 +57,16 @@ export default function (state = initialState, action) {
             });
         case ADD_TASK:
             let copy = Object.assign([], state.activeLists);
+            // console.log(copy.activeLists[action.listIndex].tasks.length);
+            const taskId = copy[action.listIndex].tasks.length + 1;
             // find the matching item that corresponds to the list being edited
             copy.forEach((o) => {
                 if(o.list === action.list) {
                     o.tasks.push({
                         task: action.task,
-                        completed: false
+                        completed: false,
+                        editing: false,
+                        taskId: taskId
                     })
                 }
             });
@@ -58,17 +74,70 @@ export default function (state = initialState, action) {
             return Object.assign({}, state, {
                 activeLists: copy
             });
+        case EDIT_TASK:
+            let toggleCopy = Object.assign([], state.activeLists);
+            // find the matching item that corresponds to the list being edited
+            toggleCopy.forEach((o, index) => {
+                if(index === action.listIndex) {
+                    o.tasks.find((x) => {
+                        if(x.taskId === action.taskId) {
+                            x.editing = true;
+                        }
+                    });
+                }
+            });
+            return Object.assign({}, state, {
+                activeLists: toggleCopy
+            });
+        case SAVE_EDITED_TASK:
+            let editedCopy = Object.assign([], state.activeLists);
+            // find the matching item that corresponds to the list being edited
+            editedCopy.forEach((o, index) => {
+                if(index === action.listIndex) {
+                    o.tasks.find((x) => {
+                        if(x.taskId === action.taskId) {
+                            console.log("here")
+                            x.task = action.task;
+                            x.editing = false;
+                        }
+                    });
+                }
+            });
 
+            return Object.assign({}, state, {
+                activeLists: editedCopy
+            });
+        case COMPLETE_TASK:
+            let completeCopy = Object.assign([], state.activeLists);
+            // find the matching item that corresponds to the list being edited
+            completeCopy.forEach((o, index) => {
+                if(index === action.listIndex) {
+                    o.tasks.find((x) => {
+                        if(x.taskId === action.taskId) {
+                            x.completed = !x.completed;
+                        }
+                    });
+                }
+            });
+            return Object.assign({}, state, {
+                activeLists: completeCopy
+            });
         case DELETE_TASK:
         // TODO: Try doing this with reduce. Tomorrow problem
             let dupe = Object.assign([], state.activeLists);
 
             dupe.forEach((o, index) => {
                 if(index === action.listIndex) {
-                    o.tasks = [
-                        ...o.tasks.slice(0, action.taskIndex),
-                        ...o.tasks.slice(action.taskIndex + 1)
-                    ]
+                    if(index === action.listIndex) {
+                        o.tasks.find((x, i) => {
+                            if(x.taskId === action.taskId) {
+                                o.tasks = [
+                                    ...o.tasks.slice(0, i),
+                                    ...o.tasks.slice(i + 1)
+                                ]
+                            }
+                        });
+                    }
                 }
             });
             return Object.assign({}, state, {

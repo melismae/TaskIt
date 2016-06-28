@@ -7,6 +7,8 @@ export const DELETE_LIST = 'DELETE_LIST';
 // task specific data
 export const TASK_NAME = 'TASK_NAME';
 export const ADD_TASK = 'ADD_TASK';
+export const EDIT_TASK = 'EDIT_TASK';
+export const SAVE_EDITED_TASK = 'SAVE_EDITED_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 export const COMPLETE_TASK = 'COMPLETE_TASK';
 
@@ -50,26 +52,45 @@ export function taskName(task) {
     };
 }
 
-export function addTask(task, list) {
+export function addTask(task, list, listIndex) {
     return {
         type: ADD_TASK,
         task: task,
-        list: list
-    };
-}
-
-export function deleteTask(taskIndex, listIndex) {
-    return {
-        type: DELETE_TASK,
-        taskIndex: taskIndex,
+        list: list,
         listIndex: listIndex
     };
 }
 
-export function completeTask(index) {
+export function editTask(taskId, listIndex) {
+    return {
+        type: EDIT_TASK,
+        taskId: taskId,
+        listIndex: listIndex
+    };
+}
+
+export function saveEditedTask(task, listIndex, taskId) {
+    return {
+        type: SAVE_EDITED_TASK,
+        task: task,
+        listIndex: listIndex,
+        taskId: taskId
+    };
+}
+
+export function deleteTask(taskId, listIndex) {
+    return {
+        type: DELETE_TASK,
+        taskId: taskId,
+        listIndex: listIndex
+    };
+}
+
+export function completeTask(taskId, listIndex) {
     return {
         type: COMPLETE_TASK,
-        index: index
+        taskId: taskId,
+        listIndex: listIndex
     };
 }
 

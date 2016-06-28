@@ -12,9 +12,6 @@ class TaskFilterButtons extends Component {
     }
 
     taskFilter(value) {
-        // let val = event.target.value;
-        // let currentList = this.props.lists.activeLists[this.props.lists.currentList].list;
-        // debounced.call(this, val);
         if (value === 'completed') {
             this.props.showCompleted();
         } else if (value === 'incomplete') {

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TaskFilterButtons from './task-filter-buttons';
-import { addTask, deleteTask, completedTask, taskName } from '../actions/index';
+import { addTask, editTask, saveEditedTask, deleteTask, completeTask, taskName } from '../actions/index';
 import _ from 'lodash';
 
 // TODO: used twice - could probably move to helper function in a /lib dir
 let debounced = _.debounce(function(val) {
     this.props.taskName(val);
-}, 100);
+}, 300);
 
 class Tasks extends Component {
     constructor(props) {
@@ -16,6 +16,9 @@ class Tasks extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.newTask = this.newTask.bind(this);
         this.removeTask = this.removeTask.bind(this);
+        this.editTask = this.editTask.bind(this);
+        this.saveEditedTask = this.saveEditedTask.bind(this);
+        this.completeTask = this.completeTask.bind(this);
     }
 
     onInputChange(event) {
@@ -26,13 +29,31 @@ class Tasks extends Component {
 
     newTask() {
         let task = this.props.lists.task;
-        let list = this.props.lists.activeLists[this.props.lists.currentList].list;
-        this.props.addTask(task, list);
+        let listIndex = this.props.lists.currentList;
+        let list = this.props.lists.activeLists[listIndex].list;
+        this.props.addTask(task, list, listIndex);
     }
 
-    removeTask(taskIndex) {
+    editTask(taskId) {
         let listIndex = this.props.lists.currentList;
-        this.props.deleteTask(taskIndex, listIndex);
+        this.props.editTask(taskId, listIndex)
+    }
+
+    completeTask(taskId) {
+        let listIndex = this.props.lists.currentList;
+        console.log(taskId, listIndex)
+        this.props.completeTask(taskId, listIndex);
+    }
+
+    saveEditedTask(taskId) {
+        let task = this.props.lists.task;
+        let listIndex = this.props.lists.currentList;
+        this.props.saveEditedTask(task, listIndex, taskId);
+    }
+
+    removeTask(taskId) {
+        let listIndex = this.props.lists.currentList;
+        this.props.deleteTask(taskId, listIndex);
     }
 
     renderTasks() {
@@ -57,17 +78,28 @@ class Tasks extends Component {
 
         return tasks.map((task, index, filter) => {
             return (
-                <div className="row form-inline" key={index}>
+                <div className="row form-inline" key={task.taskId}>
                     <div className="form-group">
                         <div className="col-xs-8">
-                            <div className="input-group-addon">{task.task}</div>
+                        { task.editing ?
+                            <input
+                                type="text"
+                                className="form-control"
+                                defaultValue={task.task}
+                                onChange={this.onInputChange}
+                                onMouseLeave={() => this.saveEditedTask(task.taskId)} /> :
+                            <div
+                                className="input-group-addon"
+                                onClick={() => this.editTask(task.taskId)}>
+                                    {task.task}
+                            </div> }
                         </div>
                         <div className="col-xs-2">
-                            <div className="checkbox"><input type="checkbox"/></div>
+                            <div className="checkbox"><input checked={task.completed} type="checkbox" onChange={() => this.completeTask(task.taskId)}/></div>
 
                         </div>
                         <div className="col-xs-2">
-                            <div className="checkbox"><input type="checkbox" onClick={() => this.removeTask(index)}/></div>
+                            <div className="checkbox"><input type="checkbox" onClick={() => this.removeTask(task.taskId)}/></div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +150,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ addTask, deleteTask, completedTask, taskName }, dispatch);
+    return bindActionCreators({ addTask, editTask, saveEditedTask, deleteTask, completeTask, taskName }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks);
