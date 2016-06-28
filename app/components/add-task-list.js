@@ -28,11 +28,12 @@ class AddTaskList extends Component {
     render() {
         return (
             <div>
-                <h3>Add A new task list</h3>
+                <h1>Add a new task list</h1>
                 <input
                     placeholder="Task List Name"
-                    onChange={this.onInputChange} />
-                <button onClick={this.onSubmit}>Create</button>
+                    onChange={this.onInputChange}
+                    className="form-control" />
+                <button onClick={this.onSubmit} className="btn btn-primary">CREATE</button>
             </div>
         )
     }

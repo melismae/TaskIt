@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-boilerplate",
+  "name": "TaskIt",
   "version": "1.0.0",
-  "description": "React Redux Boilerplate for getting started quickly on apps",
+  "description": "A task/todo app.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -24,7 +24,6 @@
     "babel-preset-stage-1": "^6.1.18",
     "css-loader": "^0.23.1",
     "npm-install-webpack-plugin": "^4.0.0",
-    "react-bootstrap": "^0.29.4",
     "redux-devtools": "^3.3.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",

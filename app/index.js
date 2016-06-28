@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import persistState from 'redux-localstorage';
 import App from './components/app';
 import reducers from './reducers';
+// import { css } from './style/main.css';
+
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 

@@ -30,7 +30,7 @@ const common = {
       {
         // Test expects a RegExp! DON'T BE A FOOL!
         test: /\.css$/,
-        loaders: ['style', 'css'],
+        loader: "style-loader!css-loader",
         // Include accepts either an path or an array of paths
         include: PATHS.app
       },

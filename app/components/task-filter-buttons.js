@@ -27,18 +27,28 @@ class TaskFilterButtons extends Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col-xs-3">
-                    <button className="btn btn-info" onClick={() => this.taskFilter('completed')}>Show Completed</button>
+            <div className="button-filter-wrapper">
+                <div className="row">
+                    <div className="col-xs-12">
+                        <h4>Currently showing {this.props.filter.filter} tasks</h4>
+                    </div>
                 </div>
-                <div className="col-xs-3">
-                    <button className="btn btn-info" onClick={() => this.taskFilter('incomplete')}>Show Incomplete</button>
-                </div>
-                <div className="col-xs-3">
-                    <button className="btn btn-info" onClick={() => this.taskFilter('all')}>Show All</button>
-                </div>
-                <div className="col-xs-3">
-                    <button className="btn btn-danger" onClick={this.deleteList}>Delete this List</button>
+                <div className="row">
+                    <div className="col-xs-1">
+                        <p className="text-left">Filter by</p>
+                    </div>
+                    <div className="col-xs-2">
+                        <button className="btn btn-info" onClick={() => this.taskFilter('completed')}> COMPLETED</button>
+                    </div>
+                    <div className="col-xs-2">
+                        <button className="btn btn-info" onClick={() => this.taskFilter('incomplete')}> INCOMPLETE</button>
+                    </div>
+                    <div className="col-xs-2">
+                        <button className="btn btn-info" onClick={() => this.taskFilter('all')}>ALL</button>
+                    </div>
+                    <div className="col-xs-4">
+                        <button className="btn btn-danger" onClick={this.deleteList}>DELETE THIS LIST</button>
+                    </div>
                 </div>
             </div>
         )
@@ -47,7 +57,8 @@ class TaskFilterButtons extends Component {
 
 function mapStateToProps(state) {
   return {
-    lists: state.lists
+    lists: state.lists,
+    filter: state.filter
   };
 }
 

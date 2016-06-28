@@ -91,15 +91,17 @@ class Tasks extends Component {
                             <div
                                 className="input-group-addon"
                                 onClick={() => this.editTask(task.taskId)}>
-                                    {task.task}
+                                    {task.task}<span className="glyphicon glyphicon-edit"></span>
                             </div> }
                         </div>
-                        <div className="col-xs-2">
-                            <div className="checkbox"><input checked={task.completed} type="checkbox" onChange={() => this.completeTask(task.taskId)}/></div>
-
+                        <div className="col-xs-2 text-center">
+                            { task.editing ? "" :
+                            <div className="checkbox"><input checked={task.completed} type="checkbox" onChange={() => this.completeTask(task.taskId)}/></div>                            }
                         </div>
-                        <div className="col-xs-2">
+                        <div className="col-xs-2 text-center">
+                            { task.editing ? "" :
                             <div className="checkbox"><input type="checkbox" onClick={() => this.removeTask(task.taskId)}/></div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -116,27 +118,29 @@ class Tasks extends Component {
         }
         return (
             <div>
-                <div className="row">
-                    <h3 className="col-xs-8">Tasks for {taskListName}</h3>
-                </div>
+                {this.props.lists.activeLists.length > 0 ?
+                <div>
+                    <div className="row">
+                        <h1 className="col-xs-8">Tasks for {taskListName}</h1>
+                    </div>
 
-                <div className="row">
-                    <h4 className="col-xs-offset-8 col-xs-2">Done</h4>
-                    <h4 className="col-xs-2">Delete</h4>
-                </div>
-                {this.renderTasks()}
-                <div className="row">
-                    <div className="col-xs-8">
-                        <input
-                            placeholder="Add A Task"
-                            onChange={this.onInputChange}
-                            className="form-control" />
+                    <div className="row">
+                        <h4 className="col-xs-offset-8 col-xs-2 text-center">Done</h4>
+                        <h4 className="col-xs-2 text-center">Delete</h4>
                     </div>
-                    <div className="col-xs-2">
-                        <button className="btn btn-primary" onClick={this.newTask}>Add Task</button>
+                    {this.renderTasks()}
+                    <div className="row">
+                        <div className="col-xs-12 form-group">
+                            <input
+                                placeholder="Add A Task"
+                                onChange={this.onInputChange}
+                                className="form-control" />
+                            <button className="btn btn-primary" onClick={this.newTask}>ADD TASK</button>
+                        </div>
+
                     </div>
-                </div>
-                <TaskFilterButtons />
+                    <TaskFilterButtons />
+                </div> : ""}
             </div>
         )
     }

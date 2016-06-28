@@ -12,7 +12,7 @@ class TaskLists extends Component {
         return this.props.lists.activeLists.map((list, index) => {
             return (
                 <li onClick={() => this.props.selectList(list, index)}
-                    className="list-group-item list-name"
+                    className="list-name"
                     key={index}>
                     {list.list}
                 </li>
@@ -23,9 +23,11 @@ class TaskLists extends Component {
     render() {
         return (
             <div>
-                <h3>Task Lists</h3>
-                <ul>
-                    {this.renderList()}
+                <h1>Task Lists</h1>
+                <ul className="list-unstyled">
+                    {this.props.lists.activeLists.length > 0 ?
+                        this.renderList()
+                    : "You don't have any lists. Add one above to get started." }
                 </ul>
             </div>
         )
